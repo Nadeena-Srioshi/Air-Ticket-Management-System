@@ -1,0 +1,17 @@
+footer {
+    background: linear-gradient(to right, purple, pink);
+    color: white;
+  }
+
+  footer h5,
+  footer a {
+    color: white;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  .fixed-bottom .border-top {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
