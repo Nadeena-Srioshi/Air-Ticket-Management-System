@@ -9,16 +9,24 @@ const printAll = async (req, res) => {
     res.render("printall", { users: [], error: "unable to fetch users" });
     console.log(error);
   }
-};
+}; //just for testing
 
 const signUp = async (req, res) => {
   res.render("signup");
 };
 
-const signIn = async (req, res) => {};
+const signIn = async (req, res) => {
+  res.render("signin");
+};
+
+const dashboard = async (req, res) => {
+  const user = req.session.user;
+  res.render("dashboard", { user: user });
+};
 
 module.exports = {
   printAll,
   signUp,
   signIn,
+  dashboard,
 };
