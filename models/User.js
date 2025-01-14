@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const validateEmail = function (email) {
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
+  var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return regex.test(email);
 };
 
 const UserSchema = new mongoose.Schema({

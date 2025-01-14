@@ -1,21 +1,47 @@
 const User = require("../models/User");
-const axios = require("axios");
+
+const validateEmail = function (email) {
+  var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return regex.test(email);
+};
 
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
-    res.status(200).json({ users: users, amount: users.length });
+    res.status(200).json({
+      users: users,
+      amount: users.length,
+      msg: "all users fetched successfully",
+    });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
 const createUser = async (req, res) => {
   try {
+    const email = req.body.email;
+    if (!validateEmail(email)) {
+      res.status(400).json({ msg: "enter valid email" });
+      return;
+    }
+    const userExists = await User.findOne({ email: email });
+    if (userExists) {
+      res.status(409).json({ msg: "email already registered" });
+      return;
+    }
+    if (req.body.password.length < 4) {
+      res
+        .status(400)
+        .json({ msg: "password must be at least 4 characters long" });
+      return;
+    }
     const user = await User.create(req.body);
-    res.status(201).json({ user: user });
+    res
+      .status(201)
+      .json({ user: user, msg: "new user successfully registered" });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
@@ -27,13 +53,12 @@ const authUser = async (req, res) => {
       res.status(400).json({ msg: "email and password required" });
       return;
     }
-    let user;
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/users/email/${email}`
-      );
-      user = response.data.user;
-    } catch (error) {
+    if (!validateEmail(email)) {
+      res.status(400).json({ msg: "enter valid email" });
+      return;
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) {
       res.status(404).json({ msg: `user not found with email: ${email}` });
       return;
     }
@@ -46,7 +71,7 @@ const authUser = async (req, res) => {
     res.status(200).json({ user: user });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
@@ -60,7 +85,7 @@ const getUser = async (req, res) => {
     }
     res.status(200).json({ user: user });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
@@ -74,7 +99,7 @@ const getUserByEmail = async (req, res) => {
     }
     res.status(200).json({ user: user });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
@@ -91,7 +116,7 @@ const updateUser = async (req, res) => {
     }
     res.status(200).json({ user });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
@@ -105,7 +130,7 @@ const deleteUser = async (req, res) => {
     }
     res.status(200).json({ user: null, status: "success" });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 

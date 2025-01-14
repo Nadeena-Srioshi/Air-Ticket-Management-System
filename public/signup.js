@@ -12,12 +12,16 @@ signUpFormDOM.addEventListener("submit", async (e) => {
   const pw = pwDOM.value;
 
   try {
-    await axios.post("http://localhost:3000/api/v1/users", { name: name, email: email, password: pw });
+    const response = await axios.post("http://localhost:3000/api/v1/users", {
+      name: name,
+      email: email,
+      password: pw,
+    });
     nameDOM.value = "";
     emailDOM.value = "";
     pwDOM.value = "";
     alertDOM.textContent = "success";
   } catch (error) {
-    alertDOM.textContent = "failed";
+    alertDOM.textContent = `${error.response.data.msg}`;
   }
 });

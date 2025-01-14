@@ -13,12 +13,13 @@
       justify-content: center;
       height: 100vh;
       background-color: black;
+      flex-direction: column;
     "
   >
     <div>
       <form style="background-color: gray" id="signInForm">
         <label for="">Email:</label><br /><input
-          type="email"
+          type="text"
           id="email"
         /><br /><br />
         <label for="">Password</label><br /><input
@@ -27,8 +28,8 @@
         /><br /><br />
         <button type="submit" id="signInBtn">SignIn</button>
       </form>
-      <p style="color: white" id="alert"></p>
     </div>
+    <p style="color: white" id="alert"></p>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
     <script src="/signin.js"></script>
   </body>

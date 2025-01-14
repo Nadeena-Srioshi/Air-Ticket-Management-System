@@ -21,11 +21,11 @@ signInFormDOM.addEventListener("submit", async (e) => {
       const user = response.data.user;
       window.location.href = "/dashboard";
     } else {
-      alertDOM.textContent = "failed";
+      alertDOM.textContent = "failed (not 200)";
     }
   } catch (error) {
-    emailDOM.value = "";
-    pwDOM.value = "";
-    alertDOM.textContent = "failed";
+    // emailDOM.value = "";
+    // pwDOM.value = "";
+    alertDOM.textContent = `${error.response.data.msg}`;
   }
 });
