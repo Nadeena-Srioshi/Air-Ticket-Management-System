@@ -44,7 +44,7 @@ const createUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: "internal server error" });
   }
-};
+}; //bunch of these checks are redundant with the frontend, keeping for api
 
 const authUser = async (req, res) => {
   try {
@@ -75,7 +75,7 @@ const authUser = async (req, res) => {
     console.log(error);
     res.status(500).json({ msg: "internal server error" });
   }
-}; //bunch of these checks will be redundant with the frontend
+}; //bunch of these checks are redundant with the frontend, keeping for api
 
 const getUser = async (req, res) => {
   try {
