@@ -29,7 +29,7 @@ signInFormDOM.addEventListener("submit", async (event) => {
     );
     if (response.status === 200) {
       const user = response.data.user;
-      window.location.href = "/dashboard";
+      window.location.href = "/index";
     } else {
       alertDOM.textContent = "failed (not 200)";
     }

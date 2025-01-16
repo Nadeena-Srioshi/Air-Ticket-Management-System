@@ -11,6 +11,10 @@ const printAll = async (req, res) => {
   }
 }; //just for testing
 
+const index = async (req, res) => {
+  res.render("index");
+};
+
 const signUp = async (req, res) => {
   res.render("signup");
 };
@@ -19,14 +23,19 @@ const signIn = async (req, res) => {
   res.render("signin");
 };
 
-const dashboard = async (req, res) => {
-  const user = req.session.user;
-  res.render("dashboard", { user: user });
+const booking = async (req, res) => {
+  res.render("booking");
+};
+
+const experience = async (req, res) => {
+  res.render("experience");
 };
 
 module.exports = {
   printAll,
+  index,
   signUp,
   signIn,
-  dashboard,
+  booking,
+  experience,
 };
