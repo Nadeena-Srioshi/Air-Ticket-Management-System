@@ -1,6 +1,7 @@
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
-const validateEmail = function (email) {
+const validateEmail = (email) => {
   var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return regex.test(email);
 };
@@ -62,7 +63,8 @@ const authUser = async (req, res) => {
       res.status(404).json({ msg: `user not found with email: ${email}` });
       return;
     }
-    if (pw !== user.password) {
+    const matchHash = await bcrypt.compare(pw, user.password);
+    if (!matchHash) {
       res.status(401).json({ msg: `authentication failed, invalid password` });
       return;
     }

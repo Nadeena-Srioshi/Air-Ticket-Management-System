@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const hashPassword = require("../middleware/hash-password");
 
-const validateEmail = function (email) {
+const validateEmail = (email) => {
   var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return regex.test(email);
 };
@@ -26,5 +27,7 @@ const UserSchema = new mongoose.Schema({
     minlength: [4, "password must be at least 4 characters long"],
   },
 });
+
+UserSchema.pre("save", hashPassword);
 
 module.exports = mongoose.model("User", UserSchema);
