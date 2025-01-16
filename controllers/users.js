@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-const validateEmail = (email) => {
+const validateEmail = function (email) {
   var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return regex.test(email);
 };
@@ -75,7 +75,7 @@ const authUser = async (req, res) => {
     console.log(error);
     res.status(500).json({ msg: "internal server error" });
   }
-};
+}; //bunch of these checks will be redundant with the frontend
 
 const getUser = async (req, res) => {
   try {
