@@ -43,7 +43,7 @@ updateFormDOM.addEventListener("submit", async (event) => {
     );
     console.log(userFetch.data.user._id);
 
-    if (!user) {
+    if (!userFetch) {
       throw new Error("no active session");
     }
 
@@ -62,12 +62,12 @@ updateFormDOM.addEventListener("submit", async (event) => {
     //alertDOM.textContent = "success";
     window.location.href = "/profile";
   } catch (error) {
-    // if (error.response.data.msg) {
-    //   alertDOM.textContent = `${error.response.data.msg}`;
-    // } else {
-    //   alertDOM.textContent = "failed to update";
-    // }
-    console.log("failed to update");
+    if (error.response.data.msg) {
+      alertDOM.textContent = `${error.response.data.msg}`;
+    } else {
+      alertDOM.textContent = "failed to update";
+    }
+    console.log(error);
   }
 });
 
