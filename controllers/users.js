@@ -19,6 +19,14 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const currentUser = async (req, res) => {
+  if (req.session.user) {
+    res.status(200).json({ user: req.session.user });
+  } else {
+    res.status(404).json({ user: null });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const email = req.body.email;
@@ -38,9 +46,7 @@ const createUser = async (req, res) => {
       return;
     }
     const user = await User.create(req.body);
-    res
-      .status(201)
-      .json({ user: user, msg: "new user successfully registered" });
+    res.status(201).json({ msg: "new user successfully registered" });
   } catch (error) {
     res.status(500).json({ msg: "internal server error" });
   }
@@ -116,7 +122,7 @@ const updateUser = async (req, res) => {
       res.status(404).json({ msg: `no user with id: ${userID}` });
       return;
     }
-    res.status(200).json({ user });
+    res.status(200).json({ msg: "user successfully updated" });
   } catch (error) {
     res.status(500).json({ msg: "internal server error" });
   }
@@ -138,6 +144,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
+  currentUser,
   createUser,
   authUser,
   getUser,

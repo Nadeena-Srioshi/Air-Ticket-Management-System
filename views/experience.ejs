@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="/footer.css">
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/footer.css" />
 
   <title>Hanz Airline - Experience</title>
   <style>
@@ -35,107 +35,99 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container-fluid">
-      <img src="/assets/home/logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      <span class="navbar-brand mb-0 h1">Hanz Airline</span>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/index">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">Book & Plan</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/booking">Book</a></li>
-              <li><a class="dropdown-item" href="#">Manage</a></li>
-              <li><a class="dropdown-item" href="#">Check-In</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/experience">Experience</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <%- include("./partials/nav") %>
 
-  <div class="container mt-5 pt-5">
-    <h1 class="text-center mb-4 highlight">Discover the Hanz Airline Experience</h1>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/luxury.png" class="card-img-top" alt="Luxury Travel">
-          <div class="card-body">
-            <h5 class="card-title">Luxury Travel</h5>
-            <p class="card-text">Experience unparalleled luxury with our premium seating and personalized services. Indulge in a journey like no other.</p>
+    <div class="container mt-5 pt-5">
+      <h1 class="text-center mb-4 highlight">
+        Discover the Hanz Airline Experience
+      </h1>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/luxury.png" class="card-img-top" alt="Luxury Travel" />
+            <div class="card-body">
+              <h5 class="card-title">Luxury Travel</h5>
+              <p class="card-text">
+                Experience unparalleled luxury with our premium seating and
+                personalized services. Indulge in a journey like no other.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/entertainment.webp" class="card-img-top" alt="In-Flight Entertainment" />
+            <div class="card-body">
+              <h5 class="card-title">In-Flight Entertainment</h5>
+              <p class="card-text">
+                Enjoy the latest movies, TV shows, and music with our
+                state-of-the-art entertainment system on every flight.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/food.webp" class="card-img-top" alt="Gourmet Cuisine" />
+            <div class="card-body">
+              <h5 class="card-title">Gourmet Cuisine</h5>
+              <p class="card-text">
+                Savor delicious meals crafted by world-class chefs. Special
+                dietary options are available on request.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/entertainment.webp" class="card-img-top" alt="In-Flight Entertainment">
-          <div class="card-body">
-            <h5 class="card-title">In-Flight Entertainment</h5>
-            <p class="card-text">Enjoy the latest movies, TV shows, and music with our state-of-the-art entertainment system on every flight.</p>
+      <div class="row g-4 mt-3">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/wifi.webp" class="card-img-top" alt="In-Flight WiFi" />
+            <div class="card-body">
+              <h5 class="card-title">In-Flight WiFi</h5>
+              <p class="card-text">
+                Stay connected even in the sky with our high-speed WiFi
+                services, available on most flights.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/food.webp" class="card-img-top" alt="Gourmet Cuisine">
-          <div class="card-body">
-            <h5 class="card-title">Gourmet Cuisine</h5>
-            <p class="card-text">Savor delicious meals crafted by world-class chefs. Special dietary options are available on request.</p>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/spacious.webp" class="card-img-top" alt="Comfort & Space" />
+            <div class="card-body">
+              <h5 class="card-title">Comfort & Space</h5>
+              <p class="card-text">
+                Relax in our spacious and ergonomic seating designed to provide
+                maximum comfort on every journey.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="/assets/exp/amenity.webp" class="card-img-top" alt="Exclusive Amenities" />
+            <div class="card-body">
+              <h5 class="card-title">Exclusive Amenities</h5>
+              <p class="card-text">
+                From cozy blankets to luxury toiletries, enjoy exclusive
+                amenities to enhance your flying experience.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row g-4 mt-3">
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/wifi.webp" class="card-img-top" alt="In-Flight WiFi">
-          <div class="card-body">
-            <h5 class="card-title">In-Flight WiFi</h5>
-            <p class="card-text">Stay connected even in the sky with our high-speed WiFi services, available on most flights.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/spacious.webp" class="card-img-top" alt="Comfort & Space">
-          <div class="card-body">
-            <h5 class="card-title">Comfort & Space</h5>
-            <p class="card-text">Relax in our spacious and ergonomic seating designed to provide maximum comfort on every journey.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="/assets/exp/amenity.webp" class="card-img-top" alt="Exclusive Amenities">
-          <div class="card-body">
-            <h5 class="card-title">Exclusive Amenities</h5>
-            <p class="card-text">From cozy blankets to luxury toiletries, enjoy exclusive amenities to enhance your flying experience.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- <footer class="bg-light text-center py-3 mt-5" id="footer"></footer> -->
-  <%- include("footer") %>
+    <!-- <footer class="bg-light text-center py-3 mt-5" id="footer"></footer> -->
+    <%- include("./partials/footer") %>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
-  <!-- <script src="script.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+      <!-- <script src="script.js"></script> -->
 </body>
 
 </html>
