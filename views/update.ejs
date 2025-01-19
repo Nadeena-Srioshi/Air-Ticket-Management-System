@@ -87,12 +87,12 @@
         </label>
         <div class="input-group">
           <select class="form-select" id="country-code" name="country-code" aria-label="Country Code" required>
-            <option value="+1">+1 (USA)</option>
-            <option value="+44">+44 (UK)</option>
-            <option value="+91">+91 (India)</option>
-            <option value="+61">+61 (Australia)</option>
-            <option value="+94">+94 (Sri Lanka)</option>
-            <option value="+81">+81 (Japan)</option>
+            <% const userCode=user.mobileNumber.split(" ")[0]; %>
+            <% countryInfo.forEach(entry=> { %>
+              <option value=" <%=entry.countryCode %>" <% if(userCode===entry.countryCode){ %> selected <%}%>>
+                  <%= entry.countryCode %> (<%= entry.country %>)
+                      </option>
+                      <% }) %>
           </select>
           <input type="tel" id="mobile" name="mobile" class="form-control"
             value="<%= user.mobileNumber.split(" ")[1] %>" required>
@@ -100,10 +100,11 @@
         <div class="mb-3">
           <label for="nationality" class="form-label">Nationality</label>
           <select id="nationality" name="nationality" class="form-select" required>
-            <option value="American" selected>American</option>
-            <option value="Afghan">Afghan</option>
-            <option value="Albanian">Albanian</option>
-            <option value="Algerian">Algerian</option>
+            <% countryInfo.forEach(entry=> { %>
+              <option value="<%= entry.nationality %>" <% if(user.nationality===entry.nationality){ %> selected <% } %>>
+                  <%= entry.nationality%>
+              </option>
+              <% }) %>
           </select>
         </div>
         <div class="mb-3">

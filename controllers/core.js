@@ -1,4 +1,6 @@
 const axios = require("axios");
+const path = require("path");
+const fs = require("node:fs/promises");
 
 const printAll = async (req, res) => {
   try {
@@ -16,7 +18,8 @@ const index = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-  res.render("signup", { user: req.session.user });
+  const data = await readCountryInfo();
+  res.render("signup", { user: req.session.user, countryInfo: data });
 };
 
 const signIn = async (req, res) => {
@@ -39,7 +42,8 @@ const profile = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  res.render("update", { user: req.session.user });
+  const data = await readCountryInfo();
+  res.render("update", { user: req.session.user, countryInfo: data });
 };
 
 const remove = async (req, res) => {
@@ -62,6 +66,18 @@ const booking = async (req, res) => {
 const experience = async (req, res) => {
   res.render("experience", { user: req.session.user });
 };
+
+async function readCountryInfo() {
+  try {
+    const filePath = path.resolve(__dirname, "../countryInfo.json");
+    const fileData = await fs.readFile(filePath, "utf8");
+    const countryInfo = JSON.parse(fileData);
+    return countryInfo;
+  } catch (error) {
+    console.log("error reading json", error);
+    return null;
+  }
+}
 
 module.exports = {
   printAll,
