@@ -14,16 +14,20 @@ const printAll = async (req, res) => {
 }; //just for testing
 
 const index = (req, res) => {
-  res.render("index", { user: req.session.user });
+  res.render("index", { user: req.session.user, page: "home" });
 };
 
 const signUp = async (req, res) => {
   const data = await readCountryInfo();
-  res.render("signup", { user: req.session.user, countryInfo: data });
+  res.render("signup", {
+    user: req.session.user,
+    countryInfo: data,
+    page: "signup",
+  });
 };
 
 const signIn = (req, res) => {
-  res.render("signin", { user: req.session.user });
+  res.render("signin", { user: req.session.user, page: "signin" });
 };
 
 const signOut = (req, res) => {
@@ -38,12 +42,16 @@ const signOut = (req, res) => {
 };
 
 const profile = (req, res) => {
-  res.render("profile", { user: req.session.user });
+  res.render("profile", { user: req.session.user, page: "profile" });
 };
 
 const update = async (req, res) => {
   const data = await readCountryInfo();
-  res.render("update", { user: req.session.user, countryInfo: data });
+  res.render("update", {
+    user: req.session.user,
+    countryInfo: data,
+    page: "update",
+  });
 };
 
 const remove = async (req, res) => {
@@ -60,11 +68,11 @@ const remove = async (req, res) => {
 };
 
 const booking = (req, res) => {
-  res.render("booking", { user: req.session.user });
+  res.render("booking", { user: req.session.user, page: "booking" });
 };
 
 const experience = (req, res) => {
-  res.render("experience", { user: req.session.user });
+  res.render("experience", { user: req.session.user, page: "experience" });
 };
 
 async function readCountryInfo() {

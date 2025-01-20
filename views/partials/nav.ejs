@@ -5,12 +5,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/index">Home</a>
+                    <a class="nav-link <% if(page === 'home'){ %> active <% }; %> " aria-current="page"
+                        href="/index">Home</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <a class="nav-link dropdown-toggle <% if(page === 'booking'){ %> active <% }; %>"
+                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Book & Plan
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -21,8 +22,9 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Travel Information</a>
+                    <a class="nav-link dropdown-toggle <% if(page === 'travelInfo'){ %> active <% }; %>" href="#"
+                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Travel
+                        Information</a>
 
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class="ml-4">
@@ -45,7 +47,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/experience">Experience</a>
+                    <a class="nav-link <% if(page === 'experience'){ %> active <% }; %>"
+                        href="/experience">Experience</a>
                 </li>
             </ul>
 
