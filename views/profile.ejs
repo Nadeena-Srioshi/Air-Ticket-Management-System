@@ -106,16 +106,22 @@
     </div>
   </div>
 
-  <!-- <div class ="button-container">
-    <button onclick="window.location.href='updateindex.php?uid=<?php echo $row['UserID'];?>'">Edit Profile</button>
-    <button onclick="window.location.href='deleteindex.php?uid=<?php echo $row['UserID'];?>'">Delete Profile</button>
-  </div> -->
-
   <script>
     function confirmDelete() {
       const conf = confirm("Are you sure you want to delete the account?");
       conf ? window.location.href = "/remove" : "";
     }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const alertUpdate = sessionStorage.getItem("alertUpdate");
+      if (alertUpdate) {
+        setTimeout(() => {
+          alert(alertUpdate);
+          sessionStorage.removeItem("alertUpdate");
+        }, 200);
+      }
+    });
   </script>
 </body>
 

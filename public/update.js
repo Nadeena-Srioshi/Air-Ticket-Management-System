@@ -59,7 +59,7 @@ updateFormDOM.addEventListener("submit", async (event) => {
         dob: dob,
       }
     );
-    //alertDOM.textContent = "success";
+    sessionStorage.setItem("alertUpdate", "Account successfully updated!");
     window.location.href = "/profile";
   } catch (error) {
     if (error.response.data.msg) {

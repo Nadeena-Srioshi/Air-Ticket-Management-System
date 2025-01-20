@@ -60,10 +60,10 @@ signUpFormDOM.addEventListener("submit", async (event) => {
       dob: dob,
       password: pw,
     });
-    nameDOM.value = "";
-    emailDOM.value = "";
-    pwDOM.value = "";
-    //alertDOM.textContent = "success";
+    // nameDOM.value = "";
+    // emailDOM.value = "";
+    // pwDOM.value = "";
+    sessionStorage.setItem("alertNew", "Account successfully created!");
     window.location.href = "/index";
   } catch (error) {
     if (error.response.data.msg) {

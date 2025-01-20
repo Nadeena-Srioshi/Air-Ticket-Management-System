@@ -4,6 +4,7 @@ const session = require("express-session");
 const axios = require("axios"); //not used inside app.js so far
 const app = express();
 const users = require("./routes/users");
+const admins = require("./routes/admins");
 const core = require("./routes/core");
 const notFound = require("./middleware/not-found");
 
@@ -24,6 +25,8 @@ app.use(
 
 //routes
 app.use("/api/v1/users", users);
+
+app.use("/api/v1/admins", admins);
 
 app.use("/", core);
 

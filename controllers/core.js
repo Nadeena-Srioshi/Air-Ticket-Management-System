@@ -13,7 +13,7 @@ const printAll = async (req, res) => {
   }
 }; //just for testing
 
-const index = async (req, res) => {
+const index = (req, res) => {
   res.render("index", { user: req.session.user });
 };
 
@@ -22,11 +22,11 @@ const signUp = async (req, res) => {
   res.render("signup", { user: req.session.user, countryInfo: data });
 };
 
-const signIn = async (req, res) => {
+const signIn = (req, res) => {
   res.render("signin", { user: req.session.user });
 };
 
-const signOut = async (req, res) => {
+const signOut = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).json({ msg: "failed to sign out" });
@@ -37,7 +37,7 @@ const signOut = async (req, res) => {
   });
 };
 
-const profile = async (req, res) => {
+const profile = (req, res) => {
   res.render("profile", { user: req.session.user });
 };
 
@@ -59,11 +59,11 @@ const remove = async (req, res) => {
   }
 };
 
-const booking = async (req, res) => {
+const booking = (req, res) => {
   res.render("booking", { user: req.session.user });
 };
 
-const experience = async (req, res) => {
+const experience = (req, res) => {
   res.render("experience", { user: req.session.user });
 };
 
