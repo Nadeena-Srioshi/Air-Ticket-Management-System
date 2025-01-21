@@ -9,9 +9,9 @@ const {
   signOut,
   profile,
   update,
-  remove,
   booking,
   experience,
+  errorPage,
 } = require("../controllers/core");
 
 router.get("/print", printAll);
@@ -28,10 +28,10 @@ router.get("/profile", profile);
 
 router.get("/update", update);
 
-router.get("/remove", remove);
-
 router.get("/booking", booking);
 
 router.get("/experience", experience);
+
+router.get("/error-page", errorPage);
 
 module.exports = router;

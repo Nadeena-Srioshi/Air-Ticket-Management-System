@@ -76,6 +76,7 @@ const authUser = async (req, res) => {
     }
     req.session.isLoggedIn = true;
     req.session.user = user;
+    req.session.reSignUp = false;
     res.status(200).json({ user: user });
   } catch (error) {
     console.log(error);
@@ -122,6 +123,7 @@ const updateUser = async (req, res) => {
       res.status(404).json({ msg: `no user with id: ${userID}` });
       return;
     }
+    req.session.user = user;
     res.status(200).json({ msg: "user successfully updated" });
   } catch (error) {
     res.status(500).json({ msg: "internal server error" });

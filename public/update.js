@@ -15,7 +15,7 @@ updateFormDOM.addEventListener("submit", async (event) => {
   const genderDOM = document.querySelector('input[name="gender"]:checked');
   const gender = genderDOM.value;
   const countryCode = countryCodeDOM.value;
-  const mobile = mobileDOM.value;
+  const mobile = mobileDOM.value.replace(/\s+/g, "");
   const nationality = nationalityDOM.value;
   const passport = passportDOM.value;
   const dob = dobDOM.value;

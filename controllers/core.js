@@ -14,19 +14,36 @@ const printAll = async (req, res) => {
 }; //just for testing
 
 const index = (req, res) => {
-  res.render("index", { user: req.session.user, page: "home" });
+  const msg = req.session.msg || null;
+  req.session.msg = null;
+  res.render("index", {
+    user: req.session.user,
+    page: "home",
+    msg: msg,
+  });
 };
 
 const signUp = async (req, res) => {
+  if (req.session.isLoggedIn) {
+    req.session.msg = "Please sign out first to sign up again";
+    res.redirect(302, "/index");
+    return;
+  }
   const data = await readCountryInfo();
   res.render("signup", {
     user: req.session.user,
     countryInfo: data,
+    sortByKey: sortByKey,
     page: "signup",
   });
 };
 
 const signIn = (req, res) => {
+  if (req.session.isLoggedIn) {
+    req.session.msg = "Please sign out first to sign in again";
+    res.redirect(302, "/index");
+    return;
+  }
   res.render("signin", { user: req.session.user, page: "signin" });
 };
 
@@ -42,37 +59,44 @@ const signOut = (req, res) => {
 };
 
 const profile = (req, res) => {
+  if (!req.session.isLoggedIn) {
+    req.session.msg = "You must be signed in to view the profile";
+    res.redirect(302, "/index");
+    return;
+  }
   res.render("profile", { user: req.session.user, page: "profile" });
 };
 
 const update = async (req, res) => {
+  if (!req.session.isLoggedIn) {
+    req.session.msg = "You must be signed in to update the profile";
+    res.redirect(302, "/index");
+    return;
+  }
   const data = await readCountryInfo();
   res.render("update", {
     user: req.session.user,
     countryInfo: data,
+    sortByKey: sortByKey,
     page: "update",
   });
 };
 
-const remove = async (req, res) => {
-  try {
-    await axios.delete(
-      `http://localhost:3000/api/v1/users/${req.session.user._id}`
-    );
-    req.session.destroy();
-    res.redirect(302, "/index");
-  } catch (error) {
-    res.status(500).json({ msg: "failed to delete" });
-    console.log(err);
-  }
-};
-
 const booking = (req, res) => {
+  if (!req.session.isLoggedIn) {
+    req.session.msg = "You must be signed in to book tickets";
+    res.redirect(302, "/index");
+    return;
+  }
   res.render("booking", { user: req.session.user, page: "booking" });
 };
 
 const experience = (req, res) => {
   res.render("experience", { user: req.session.user, page: "experience" });
+};
+
+const errorPage = (req, res) => {
+  res.render("error-page", { user: req.session.user, page: "error" });
 };
 
 async function readCountryInfo() {
@@ -87,6 +111,15 @@ async function readCountryInfo() {
   }
 }
 
+function sortByKey(data, key) {
+  return data.sort((a, b) => {
+    if (typeof a[key] === "string") {
+      return a[key].localeCompare(b[key]);
+    }
+    return a[key] - b[key];
+  });
+} //copied function
+
 module.exports = {
   printAll,
   index,
@@ -95,7 +128,7 @@ module.exports = {
   signOut,
   profile,
   update,
-  remove,
   booking,
   experience,
+  errorPage,
 };

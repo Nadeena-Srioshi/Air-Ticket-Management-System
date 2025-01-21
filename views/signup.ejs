@@ -78,11 +78,15 @@
             <label for="mobile" class="form-label">Mobile Number</label>
             <div class="input-group">
               <select class="form-select" id="country-code" name="country-code" aria-label="Country Code" required>
-                <% countryInfo.forEach(entry=> { %>
-                  <option value="<%= entry.countryCode %>">
-                    <%= entry.countryCode %> (<%= entry.country %>)
-                  </option>
-                  <% }) %>
+                <% countryInfo.forEach(entry=> {
+                  entry.countryCode = parseInt(entry.countryCode.slice(1));
+                  }) %>
+                  <% const byCode=sortByKey(countryInfo, "countryCode" ); %>
+                    <% byCode.forEach(entry=> { %>
+                      <option value='+<%= entry.countryCode %>'>
+                        +<%= entry.countryCode %> (<%= entry.country %>)
+                      </option>
+                      <% }) %>
               </select>
               <input type="tel" id="mobile" name="mobile" class="form-control" placeholder="Enter your mobile number"
                 required />
@@ -94,11 +98,12 @@
               <option value="" disabled selected>
                 Select your nationality
               </option>
-              <% countryInfo.forEach(entry=> { %>
-                <option value="<%= entry.nationality %>">
-                  <%= entry.nationality%>
-                </option>
-                <% }) %>
+              <% const byNationality=sortByKey(countryInfo, "nationality" ); %>
+                <% byNationality.forEach(entry=> { %>
+                  <option value="<%= entry.nationality %>">
+                    <%= entry.nationality %>
+                  </option>
+                  <% }) %>
             </select>
           </div>
           <div class="mb-3">
