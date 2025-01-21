@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  printAll,
   index,
   signUp,
   signIn,
@@ -13,8 +12,6 @@ const {
   experience,
   errorPage,
 } = require("../controllers/core");
-
-router.get("/print", printAll);
 
 router.get("/index", index);
 
