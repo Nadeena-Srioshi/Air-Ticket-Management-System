@@ -1,0 +1,109 @@
+{
+  "flights": [
+      {
+          "departure": {
+              "airport": "LHR",
+              "dateTime": "2025-02-18T02:16:00.000Z"
+          },
+          "arrival": {
+              "airport": "SVO",
+              "dateTime": "2025-02-16T05:52:00.000Z"
+          },
+          "_id": "67912006783986307a542bc0",
+          "economyPrice": 128,
+          "businessPrice": 538,
+          "economySeats": [
+              [
+                  1,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0
+              ],
+              [
+                  0,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+              ],
+              [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1
+              ],
+              [
+                  1,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0
+              ],
+              [
+                  1,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0
+              ],
+              [
+                  1,
+                  1,
+                  0,
+                  0,
+                  1,
+                  1
+              ],
+              [
+                  1,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0
+              ],
+              [
+                  0,
+                  1,
+                  0,
+                  0,
+                  1,
+                  1
+              ]
+          ],
+          "businessSeats": [
+              [
+                  1,
+                  1,
+                  0,
+                  1
+              ],
+              [
+                  1,
+                  0,
+                  0,
+                  0
+              ],
+              [
+                  0,
+                  1,
+                  1,
+                  0
+              ]
+          ],
+          "isEconomyFull": false,
+          "isBusinessFull": false,
+          "flightId": 4000,
+          "__v": 0
+      }
+  ],
+  "amount": 1,
+  "msg": "all flights fetched successfully"
+}

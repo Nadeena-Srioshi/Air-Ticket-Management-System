@@ -1,10 +1,11 @@
-require("./db/connect");
+require("./db/connect"); //includes dotenv
 const express = require("express");
 const session = require("express-session");
-const axios = require("axios"); //not used inside app.js so far
 const app = express();
 const users = require("./routes/users");
 const admins = require("./routes/admins");
+const flights = require("./routes/flights");
+const bookings = require("./routes/bookings");
 const core = require("./routes/core");
 const notFound = require("./middleware/not-found");
 
@@ -27,6 +28,10 @@ app.use(
 app.use("/api/v1/users", users);
 
 app.use("/api/v1/admins", admins);
+
+app.use("/api/v1/flights", flights);
+
+app.use("/api/v1/bookings", bookings);
 
 app.use("/", core);
 
