@@ -145,6 +145,10 @@ const experience = (req, res) => {
   res.render("experience", { user: req.session.user, page: "experience" });
 };
 
+const travelInfo = (req, res) => {
+  res.render("travel-info", { user: req.session.user, page: "travel-info" });
+};
+
 const errorPage = (req, res) => {
   res.render("error-page", { user: req.session.user, page: "error" });
 };
@@ -193,5 +197,6 @@ module.exports = {
   booking,
   seating,
   experience,
+  travelInfo,
   errorPage,
 };
