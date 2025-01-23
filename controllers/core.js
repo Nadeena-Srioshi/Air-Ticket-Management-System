@@ -59,6 +59,26 @@ const profile = (req, res) => {
   res.render("profile", { user: req.session.user, page: "profile" });
 };
 
+const myBookings = (req, res) => {
+  if (!req.session.isLoggedIn) {
+    req.session.msg = "You must be signed in to view your bookings";
+    res.redirect(302, "/index");
+    return;
+  }
+  getUserBookings(req.session.user._id)
+    .then((bookings) => {
+      const userBookings = bookings;
+      res.render("my-bookings", {
+        user: req.session.user,
+        bookings: userBookings,
+        page: "my-bookings",
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
 const update = async (req, res) => {
   if (!req.session.isLoggedIn) {
     req.session.msg = "You must be signed in to update the profile";
@@ -113,7 +133,7 @@ const seating = async (req, res) => {
       to,
       departureDate,
       arrivalDate,
-      page: "seating"
+      page: "seating",
     });
   } catch (error) {
     console.error("Error fetching flight details:", error);
@@ -150,12 +170,25 @@ function sortByKey(data, key) {
   });
 } //copied function
 
+async function getUserBookings(userId) {
+  try {
+    const bookings = await Booking.find({ user: userId })
+      .populate("flight")
+      .populate("user");
+    return bookings;
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    throw new Error("Error fetching bookings");
+  }
+}
+
 module.exports = {
   index,
   signUp,
   signIn,
   signOut,
   profile,
+  myBookings,
   update,
   booking,
   seating,

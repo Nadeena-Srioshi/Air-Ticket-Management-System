@@ -7,6 +7,7 @@ const {
   signIn,
   signOut,
   profile,
+  myBookings,
   update,
   booking,
   seating,
@@ -23,6 +24,8 @@ router.get("/signin", signIn);
 router.get("/signout", signOut);
 
 router.get("/profile", profile);
+
+router.get("/my-bookings", myBookings);
 
 router.get("/update", update);
 
