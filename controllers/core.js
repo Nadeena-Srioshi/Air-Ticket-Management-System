@@ -1,5 +1,7 @@
 const path = require("path");
 const fs = require("node:fs/promises");
+const Booking = require("../models/Booking");
+const Flight = require("../models/Flight");
 
 //response.data.user.name
 
@@ -72,13 +74,51 @@ const update = async (req, res) => {
   });
 };
 
-const booking = (req, res) => {
+const booking = async (req, res) => {
   if (!req.session.isLoggedIn) {
     req.session.msg = "You must be signed in to book tickets";
     res.redirect(302, "/index");
     return;
   }
-  res.render("booking", { user: req.session.user, page: "booking" });
+  try {
+    const flights = await Flight.find({});
+
+    res.render("booking", {
+      user: req.session.user,
+      flights: flights,
+      page: "booking",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching flights");
+  }
+};
+
+const seating = async (req, res) => {
+  if (!req.session.isLoggedIn) {
+    req.session.msg = "You must be signed in to book seats";
+    res.redirect(302, "/index");
+    return;
+  }
+  const { flightId, from, to, departureDate, arrivalDate } = req.query;
+  try {
+    const flight = await Flight.findOne({ flightId: flightId });
+    if (!flight) {
+      return res.status(404).send("Flight not found");
+    }
+    res.render("seating", {
+      user: req.session.user,
+      flight,
+      from,
+      to,
+      departureDate,
+      arrivalDate,
+      page: "seating"
+    });
+  } catch (error) {
+    console.error("Error fetching flight details:", error);
+    res.status(500).send("Error fetching flight details");
+  }
 };
 
 const experience = (req, res) => {
@@ -118,6 +158,7 @@ module.exports = {
   profile,
   update,
   booking,
+  seating,
   experience,
   errorPage,
 };

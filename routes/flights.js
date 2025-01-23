@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   getAllFlights,
+  getFlightsByParams,
   createFlight,
   getFlight,
   updateFlight,
@@ -10,6 +11,8 @@ const {
 } = require("../controllers/flights");
 
 router.get("/", getAllFlights);
+
+router.post("/params", getFlightsByParams);
 
 router.post("/", createFlight);
 

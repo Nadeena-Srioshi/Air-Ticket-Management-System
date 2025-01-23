@@ -9,6 +9,7 @@ const {
   profile,
   update,
   booking,
+  seating,
   experience,
   errorPage,
 } = require("../controllers/core");
@@ -26,6 +27,8 @@ router.get("/profile", profile);
 router.get("/update", update);
 
 router.get("/booking", booking);
+
+router.get("/booking/seats", seating);
 
 router.get("/experience", experience);
 
