@@ -24,14 +24,16 @@ const getFlightsByParams = async (req, res) => {
       "departure.airport": departPort,
       "arrival.airport": arrivePort,
       "departure.dateTime": {
-        $gte: new Date(departDateStr + "T00:00:00Z"),
-        $lt: new Date(departDateStr + "T23:59:59Z"),
+        // $gte: new Date(departDateStr + "T00:00:00Z"),
+        // $lt: new Date(departDateStr + "T23:59:59Z"),
+        $gte: new Date(`${departDate}T00:00:00.000Z`),
+        $lt: new Date(`${departDate}T23:59:59.999Z`),
       },
     });
     res.json({ flights });
   } catch (error) {
     console.error("Error fetching flights:", error);
-    res.status(500).json({msg: "Error fetching flights"});
+    res.status(500).json({ msg: "Error fetching flights" });
   }
 };
 
@@ -48,6 +50,20 @@ const getFlight = async (req, res) => {
   try {
     const { id: flightID } = req.params;
     const flight = await Flight.findOne({ _id: flightID });
+    if (!flight) {
+      res.status(404).json({ msg: `no flight with id: ${flightID}` });
+      return;
+    }
+    res.status(200).json({ flight: flight });
+  } catch (error) {
+    res.status(500).json({ msg: "internal server error" });
+  }
+};
+
+const getFlightById = async (req, res) => {
+  try {
+    const { id: flightID } = req.params;
+    const flight = await Flight.findOne({ flightId: flightID });
     if (!flight) {
       res.status(404).json({ msg: `no flight with id: ${flightID}` });
       return;
@@ -95,6 +111,7 @@ module.exports = {
   getFlightsByParams,
   createFlight,
   getFlight,
+  getFlightById,
   updateFlight,
   deleteFlight,
 };

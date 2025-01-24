@@ -83,8 +83,12 @@ function generateFlightCard(flight) {
     businessPrice,
   } = flight;
 
-  const departureDate = new Date(departureTime).toLocaleString();
-  const arrivalDate = new Date(arrivalTime).toLocaleString();
+  const departureDate = new Date(departureTime).toLocaleString("en-US", {
+    timeZone: "UTC",
+  });
+  const arrivalDate = new Date(arrivalTime).toLocaleString("en-US", {
+    timeZone: "UTC",
+  });
 
   return `
         <div class="col">
@@ -92,6 +96,7 @@ function generateFlightCard(flight) {
                 <div class="card-body">
                     <h5 class="card-title">Flight from ${from} to ${to}</h5>
                     <p class="card-text">
+                        <strong>Flight:</strong> ${flightId}<br>
                         <strong>Departure:</strong> ${departureDate}<br>
                         <strong>Arrival:</strong> ${arrivalDate}<br>
                         <strong>Economy Price:</strong> $${economyPrice}<br>
@@ -122,19 +127,21 @@ document.getElementById("flight-results").addEventListener("click", (event) => {
   }
 });
 
-document.getElementById("inbound-flight-results").addEventListener("click", (event) => {
+document
+  .getElementById("inbound-flight-results")
+  .addEventListener("click", (event) => {
     if (event.target.classList.contains("book-now-btn")) {
       const flightId = event.target.getAttribute("data-flight-id");
       const from = event.target.getAttribute("data-from");
       const to = event.target.getAttribute("data-to");
       const departureDate = event.target.getAttribute("data-departure-date");
       const arrivalDate = event.target.getAttribute("data-arrival-date");
-  
+
       // Build the booking URL with parameters
       const bookingUrl = `http://localhost:3000/booking/seats?flightId=${flightId}&from=${from}&to=${to}&departureDate=${encodeURIComponent(
         departureDate
       )}&arrivalDate=${encodeURIComponent(arrivalDate)}`;
-  
+
       // Open the URL in a new tab
       window.open(bookingUrl, "_blank");
     }

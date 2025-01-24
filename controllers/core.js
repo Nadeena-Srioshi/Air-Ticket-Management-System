@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("node:fs/promises");
 const Booking = require("../models/Booking");
 const Flight = require("../models/Flight");
+const User = require("../models/User");
 
 //response.data.user.name
 
@@ -59,18 +60,32 @@ const profile = (req, res) => {
   res.render("profile", { user: req.session.user, page: "profile" });
 };
 
-const myBookings = (req, res) => {
+const myBookings = async (req, res) => {
   if (!req.session.isLoggedIn) {
     req.session.msg = "You must be signed in to view your bookings";
     res.redirect(302, "/index");
     return;
   }
   getUserBookings(req.session.user._id)
-    .then((bookings) => {
+    .then(async (bookings) => {
       const userBookings = bookings;
+      const flights = [];
+      const departureDetails = [];
+      const arrivalDetails = [];
+
+      for (let entry of bookings) {
+        const flight = await Flight.findOne({ _id: entry.flight });
+        flights.push(flight.flightId);
+        departureDetails.push(flight.departure);
+        arrivalDetails.push(flight.arrival);
+      }
+
       res.render("my-bookings", {
         user: req.session.user,
         bookings: userBookings,
+        flights: flights,
+        departures: departureDetails,
+        arrivals: arrivalDetails,
         page: "my-bookings",
       });
     })
@@ -153,6 +168,45 @@ const errorPage = (req, res) => {
   res.render("error-page", { user: req.session.user, page: "error" });
 };
 
+const adminPortal = async (req, res) => {
+  if (!req.session.isLoggedInA) {
+    res.redirect(302, "/admin-signin");
+    return;
+  }
+  const bookings = await Booking.find({});
+  const users = [];
+  const flights = [];
+  const departureDetails = [];
+  const arrivalDetails = [];
+
+  for (let entry of bookings) {
+    const user = await User.findOne({ _id: entry.user });
+    users.push(user.name);
+
+    const flight = await Flight.findOne({ _id: entry.flight });
+    flights.push(flight.flightId);
+    departureDetails.push(flight.departure);
+    arrivalDetails.push(flight.arrival);
+  }
+  res.render("admin-portal", {
+    admin: req.session.admin,
+    bookings: bookings,
+    users: users,
+    flights: flights,
+    departures: departureDetails,
+    arrivals: arrivalDetails,
+    page: "home",
+    msg: null,
+  });
+};
+
+const adminSignIn = (req, res) => {
+  res.render("admin-signin", {
+    admin: req.session.admin,
+    page: "admin-signin",
+  });
+};
+
 async function readCountryInfo() {
   try {
     const filePath = path.resolve(__dirname, "../countryInfo.json");
@@ -199,4 +253,6 @@ module.exports = {
   experience,
   travelInfo,
   errorPage,
+  adminPortal,
+  adminSignIn,
 };

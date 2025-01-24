@@ -6,6 +6,7 @@ const {
   getFlightsByParams,
   createFlight,
   getFlight,
+  getFlightById,
   updateFlight,
   deleteFlight,
 } = require("../controllers/flights");
@@ -17,6 +18,8 @@ router.post("/params", getFlightsByParams);
 router.post("/", createFlight);
 
 router.get("/id/:id", getFlight);
+
+router.get("/flightid/:id", getFlightById);
 
 router.patch("/:id", updateFlight);
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,34 +50,21 @@
         <form id="admin-login-form">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                <input type="text" class="form-control" id="email" placeholder="Enter your email" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <input type="password" class="form-control" id="pw" placeholder="Enter your password" required>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
+            <p class="form-text mt-3 text-center" id="alert" style="color: red"></p>
         </form>
     </div>
 
-    <script>
-        document.getElementById('admin-login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Simulate admin login validation
-            if (username === 'admin' && password === 'admin123') {
-                alert('Login successful!');
-                window.location.href = 'admin_dashboard.html'; // Redirect to admin dashboard
-            } else {
-                alert('Invalid username or password');
-            }
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
+    <script src="/admin-signin.js"></script>
 </body>
 
 </html>

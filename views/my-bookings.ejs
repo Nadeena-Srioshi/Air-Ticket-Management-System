@@ -1,105 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <link rel="icon" href="/assets/home/logo.png" />
     <link rel="stylesheet" href="/footer.css" />
     <title>Hanz Airline</title>
     <style>
-      :root {
-        --theme-gradient: linear-gradient(45deg, #e67818, #800080);
-        --theme-color: #ff69b4;
-      }
+        :root {
+            --theme-gradient: linear-gradient(45deg, #e67818, #800080);
+            --theme-color: #ff69b4;
+            --card-bg: #f4f4f9;
+            --card-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            --medium-purple: #9b4dca;
+            /* Adjusted purple for cards */
+            --light-purple: #e6d3f7;
+            /* Lighter purple for page background */
+        }
 
-      nav {
-        background: var(--theme-gradient);
-        color: black;
-        padding: 20px 0;
-      }
+        nav {
+            background: var(--theme-gradient);
+            color: black;
+            padding: 20px 0;
+            box-shadow: var(--card-shadow);
+        }
 
-      body {
-        height: 100vh;
-      }
+        body {
+            background: linear-gradient(120deg, #fffacd, #ffe4b5);
+            height: 100vh;
+            background-color: var(--light-purple);
+            /* Uniform light purple background */
+            font-family: Arial, sans-serif;
+        }
 
-      .custom-container {
-        margin-top: 60px;
-        min-height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: black;
-        background: white;
-      }
+        .custom-container {
+            margin-top: 60px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: black;
+        }
 
-      ul {
-        list-style-type: none;
-      }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: var(--theme-gradient);
+        }
+
+        .booking-card {
+            background: #e7d3ff;
+            border: 1px solid #cbb2e8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .booking-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .booking-info {
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .booking-info strong {
+            font-weight: bold;
+        }
+
+        .booking-info ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 10px;
+        }
+
+        .booking-info li {
+            margin-bottom: 10px;
+        }
+
+        /* Updated lighter purple color for flight and passenger cards */
+        .flight-details,
+        .passenger-details {
+            background-color: var(--medium-purple);
+            /* Same purple for both */
+            color: white;
+            border: 1px solid #8b3b9e;
+            /* A bit darker purple for borders */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            background: var(--theme-gradient);
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .booking-card {
+                padding: 15px;
+            }
+        }
     </style>
-  </head>
-  <!-- data-bs-theme="dark" bg-body-tertiary -->
 
-  <body>
+
+</head>
+
+<body>
     <%- include("./partials/nav") %>
 
-    <div class="custom-container">
-        <div class="container text-center">
-          <h2 class="text-center mb-4">Your Bookings</h2>
-          <% if (bookings.length > 0) { %>
-            <% bookings.forEach(booking => { %>
-              <div class="booking-card">
-                <div class="booking-header">
-                  Booking ID: <%= booking.bookingId %> 
-                  <span class="badge <%= booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning' %>">
-                    <%= booking.status %>
-                  </span>
-                </div>
-                <div class="booking-info">
-                  <div><strong>Flight:</strong> <%= booking.flight ? booking.flight.flightNumber : 'N/A' %></div>
-                  <div><strong>Booking Date:</strong> <%= new Date(booking.bookingDate).toLocaleDateString() %></div>
-                  <div><strong>Payment Status:</strong> <%= booking.paymentStatus %></div>
-                  <div><strong>Passengers:</strong>
-                    <ul>
-                      <% booking.passengers.forEach(passenger => { %>
-                        <li>
-                          <strong>Name:</strong> <%= passenger.name %> <br>
-                          <strong>Email:</strong> <%= passenger.email %> <br>
-                          <strong>Class:</strong> <%= passenger.classType %> <br>
-                          <strong>Seat Number:</strong> <%= passenger.seatNumber %>
-                        </li>
-                      <% }) %>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p class="text-center">You have no bookings yet.</p>
-          <% } %>
+        <div class="custom-container">
+            <div class="container text-center">
+                <br>
+                <h2>Your Bookings</h2>
+                <% if (bookings.length> 0) { %>
+                    <div class="row g-4">
+                        <% bookings.forEach((booking, index)=> { %>
+                            <div class="col-md-6 d-flex align-items-stretch">
+                                <div class="booking-card w-100">
+                                    <div class="booking-header">
+                                        Booking ID: <%= booking.bookingId %>
+                                            <span
+                                                class="badge <%= booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning' %>">
+                                                <%= booking.status %>
+                                            </span>
+                                    </div>
+
+                                    <!-- Flight Details Section -->
+                                    <div class="booking-info flight-details">
+                                        <h5>Flight Details</h5>
+                                        <div><strong>Flight:</strong>
+                                            <%= booking.flight ? flights[index] : 'N/A' %>
+                                        </div>
+                                        <div><strong>Departure:</strong>
+                                            <%= booking.flight ? departures[index].airport : 'N/A' %>
+                                        </div>
+                                        <div><strong>Destination:</strong>
+                                            <%= booking.flight ? arrivals[index].airport : 'N/A' %>
+                                        </div>
+                                        <div><strong>Booking Date:</strong>
+                                            <%= new Date(booking.bookingDate).toLocaleDateString() %>
+                                        </div>
+                                        <div><strong>Payment Status:</strong>
+                                            <%= booking.paymentStatus %>
+                                        </div>
+                                    </div>
+
+                                    <!-- Passenger Details Section -->
+                                    <div class="booking-info passenger-details">
+                                        <h5>Passenger Details</h5>
+                                        <ul>
+                                            <% booking.passengers.forEach(passenger=> { %>
+                                                <li>
+                                                    <strong>Name:</strong>
+                                                    <%= passenger.name %> <br>
+                                                        <strong>Email:</strong>
+                                                        <%= passenger.email %> <br>
+                                                            <strong>Class:</strong>
+                                                            <%= passenger.classType %> <br>
+                                                                <strong>Seat Number:</strong>
+                                                                <%= passenger.seatNumber %>
+                                                </li>
+                                                <% }) %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
+                        <p class="text-center">You have no bookings yet.</p>
+                        <% } %>
+            </div>
         </div>
-      </div>
 
-    <%- include("./partials/footer") %>
+        <%- include("./partials/footer") %>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+                integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+                crossorigin="anonymous"></script>
+</body>
+
 </html>

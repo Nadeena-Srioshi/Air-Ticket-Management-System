@@ -1,4 +1,6 @@
 const Booking = require("../models/Booking");
+const Flight = require("../models/Flight");
+const mongoose = require("mongoose");
 
 const getAllBookings = async (req, res) => {
   try {
@@ -17,23 +19,32 @@ const createBooking = async (req, res) => {
   try {
     const { flight, passengers } = req.body;
 
-    const seatNumbers = passengers.map((p) => p.seatNumber);
+    let passengersE = [];
+    let passengersB = [];
 
-    const existingBookings = await Booking.find({
-      flight,
-      "passengers.seatNumber": { $in: seatNumbers },
+    passengers.forEach((item) => {
+      if (item.classType === "Economy") passengersE.push(item);
+      if (item.classType === "Business") passengersB.push(item);
     });
 
-    if (existingBookings.length > 0) {
-      const conflictingSeats = existingBookings
-        .flatMap((b) => b.passengers)
-        .filter((p) => seatNumbers.includes(p.seatNumber))
-        .map((p) => p.seatNumber);
+    const seatNumbersE = passengersE.map((p) => p.seatNumber);
+    const seatNumbersB = passengersB.map((p) => p.seatNumber);
 
+    const existingBookingsE = await Booking.find({
+      flight,
+      "passengers.seatNumber": { $in: seatNumbersE },
+    });
+
+    const existingBookingsB = await Booking.find({
+      flight,
+      "passengers.seatNumber": { $in: seatNumbersB },
+    });
+
+    if (existingBookingsE.length > 0 || existingBookingsB.length > 0) {
       return res.status(400).json({
-        msg: `Seats already booked for this flight: ${conflictingSeats.join(
-          ", "
-        )}`,
+        msg: `Seats already booked for this flight:`,
+        existingBookingsE,
+        existingBookingsB,
       });
     }
 
@@ -42,6 +53,38 @@ const createBooking = async (req, res) => {
       msg: "New booking successfully registered",
       booking,
     });
+
+    const rowsE = [];
+    const columnsE = [];
+    seatNumbersE.forEach((item) => {
+      const letter = item[0];
+      const row = item[1];
+      const letterValue = letter.charCodeAt(0) - 64;
+      columnsE.push(letterValue);
+      rowsE.push(parseInt(row, 10));
+    });
+
+    const rowsB = [];
+    const columnsB = [];
+    seatNumbersB.forEach((item) => {
+      const letter = item[0];
+      const row = item[1];
+      const letterValue = letter.charCodeAt(0) - 64;
+      columnsB.push(letterValue);
+      rowsB.push(parseInt(row, 10));
+    });
+
+    const FLIGHT = await Flight.findOne({ _id: flight });
+
+    for (let i = 0; i < seatNumbersE.length; i++) {
+      FLIGHT.economySeats[rowsE[i] - 1][columnsE[i] - 1] = 1;
+    }
+
+    for (let i = 0; i < seatNumbersB.length; i++) {
+      FLIGHT.businessSeats[rowsB[i] - 1][columnsB[i] - 1] = 1;
+    }
+
+    await FLIGHT.save();
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Internal server error" });
@@ -65,29 +108,6 @@ const getBooking = async (req, res) => {
 const updateBooking = async (req, res) => {
   try {
     const { id: bookingID } = req.params;
-    const { flight, passengers } = req.body;
-
-    const seatNumbers = passengers.map((p) => p.seatNumber);
-
-    const existingBookings = await Booking.find({
-      _id: { $ne: bookingID },
-      flight,
-      "passengers.seatNumber": { $in: seatNumbers },
-    });
-
-    if (existingBookings.length > 0) {
-      const conflictingSeats = existingBookings
-        .flatMap((b) => b.passengers)
-        .filter((p) => seatNumbers.includes(p.seatNumber))
-        .map((p) => p.seatNumber);
-
-      return res.status(400).json({
-        msg: `Seats already booked for this flight: ${conflictingSeats.join(
-          ", "
-        )}`,
-      });
-    }
-
     const booking = await Booking.findOneAndUpdate(
       { _id: bookingID },
       req.body,
@@ -96,29 +116,72 @@ const updateBooking = async (req, res) => {
         runValidators: true,
       }
     );
-
     if (!booking) {
-      return res.status(404).json({ msg: `No booking with id: ${bookingID}` });
+      res.status(404).json({ msg: `no booking with id: ${bookingID}` });
+      return;
     }
-
-    res.status(200).json({
-      msg: "Booking successfully updated",
-      booking,
-    });
+    res
+      .status(200)
+      .json({ success: true, msg: "booking successfully updated" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json({ msg: "internal server error" });
   }
 };
 
 const deleteBooking = async (req, res) => {
   try {
     const { id: bookingID } = req.params;
-    const booking = await Booking.findOneAndDelete({ _id: bookingID });
+    const booking = await Booking.findOne({ _id: bookingID });
     if (!booking) {
       res.status(404).json({ msg: `no booking with id: ${bookingID}` });
       return;
     }
+    const { flight, passengers } = booking;
+    let passengersE = [];
+    let passengersB = [];
+
+    passengers.forEach((item) => {
+      if (item.classType === "Economy") passengersE.push(item);
+      if (item.classType === "Business") passengersB.push(item);
+    });
+
+    const seatNumbersE = passengersE.map((p) => p.seatNumber);
+    const seatNumbersB = passengersB.map((p) => p.seatNumber);
+
+    await Booking.findOneAndDelete({ _id: bookingID });
+
+    const rowsE = [];
+    const columnsE = [];
+    seatNumbersE.forEach((item) => {
+      const letter = item[0];
+      const row = item[1];
+      const letterValue = letter.charCodeAt(0) - 64;
+      columnsE.push(letterValue);
+      rowsE.push(parseInt(row, 10));
+    });
+
+    const rowsB = [];
+    const columnsB = [];
+    seatNumbersB.forEach((item) => {
+      const letter = item[0];
+      const row = item[1];
+      const letterValue = letter.charCodeAt(0) - 64;
+      columnsB.push(letterValue);
+      rowsB.push(parseInt(row, 10));
+    });
+
+    const FLIGHT = await Flight.findOne({ _id: flight });
+
+    for (let i = 0; i < seatNumbersE.length; i++) {
+      FLIGHT.economySeats[rowsE[i] - 1][columnsE[i] - 1] = 0;
+    }
+
+    for (let i = 0; i < seatNumbersB.length; i++) {
+      FLIGHT.businessSeats[rowsB[i] - 1][columnsB[i] - 1] = 0;
+    }
+
+    await FLIGHT.save();
+
     res.status(200).json({ booking: null, status: "success" });
   } catch (error) {
     res.status(500).json({ msg: "internal server error" });

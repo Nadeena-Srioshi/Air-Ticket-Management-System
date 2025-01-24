@@ -74,6 +74,6 @@ BookingSchema.plugin(sequence, {
   start_seq: 2000,
 });
 
-BookingSchema.pre("save", validatePassengers);
+//BookingSchema.pre("save", validatePassengers);
 
 module.exports = mongoose.model("Booking", BookingSchema);

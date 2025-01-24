@@ -35,7 +35,7 @@ app.use("/api/v1/bookings", bookings);
 
 app.use("/", core);
 
-app.use(notFound);
+//app.use(notFound);
 
 const port = 3000;
 

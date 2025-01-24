@@ -14,6 +14,8 @@ const {
   experience,
   travelInfo,
   errorPage,
+  adminPortal,
+  adminSignIn,
 } = require("../controllers/core");
 
 router.get("/index", index);
@@ -39,5 +41,9 @@ router.get("/experience", experience);
 router.get("/travel-info", travelInfo);
 
 router.get("/error-page", errorPage);
+
+router.get("/admin-portal", adminPortal);
+
+router.get("/admin-signin", adminSignIn);
 
 module.exports = router;

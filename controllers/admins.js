@@ -74,7 +74,7 @@ const authAdmin = async (req, res) => {
       res.status(401).json({ msg: `authentication failed, invalid password` });
       return;
     }
-    req.session.isLoggedIn = true;
+    req.session.isLoggedInA = true;
     req.session.admin = admin;
     res.status(200).json({ admin: admin });
   } catch (error) {
