@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <img src="/assets/home/logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" />
+        <span class="navbar-brand mb-0 h1">Hanz Airline</span>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link <% if(page === 'home'){ %> active <% }; %>" aria-current="page"
+                        href="/index">Home</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <% if(page === 'booking'){ %> active <% }; %>"
+                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Book & Plan
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/booking">Book</a></li>
+                        <li><a class="dropdown-item" href="#">Manage</a></li>
+                        <li><a class="dropdown-item" href="#">Check-In</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <% if(page === 'travel-info'){ %> active <% }; %>" href="#"
+                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Travel
+                        Information</a>
+
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="ml-4">
+                            <h6>Baggage</h6>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/travel-info#baggage-allowance">Baggage Allowance</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/travel-info#additional-baggage">Additional Baggage</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li>
+                            <h6>General Information</h6>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/travel-info#visa-passport">Visa & Passport
+                                Requirements</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <% if(page === 'experience'){ %> active <% }; %>"
+                        href="/experience">Experience</a>
+                </li>
+            </ul>
+
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <!--<button class="btn btn-outline-success" type="submit">Search</button> -->
+            </form>
+
+            <% if(user){ %> <%- include("./nav-loggedin-true") %>
+                    <% }else{ %> <%- include("./nav-loggedin-false") %>
+                            <% } %>
+        </div>
+    </div>
+</nav>

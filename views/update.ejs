@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="/footer.css" />
+  <title>Edit Profile</title>
+  <style>
+    :root {
+      --theme-gradient: linear-gradient(45deg, #e67818, #800080);
+    }
+
+    body {
+      background: linear-gradient(120deg, #fffacd, #ffe4b5);
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav {
+      background: var(--theme-gradient);
+      color: black;
+      padding: 20px 0;
+    }
+
+    .edit-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    .edit-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .edit-header h2 {
+      margin: 0;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn {
+      width: 48%;
+    }
+
+    /* Profile Avatar Styling */
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 20px auto;
+      background-color: #ddd;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include("./partials/nav") %>
+    <br><br>
+    <div class="edit-container">
+      <div class="edit-header">
+        <h2>Edit Profile</h2>
+      </div>
+      <form id="updateForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" id="name" name="name" class="form-control" value="<%= user.name %>" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" value="<%= user.email %>" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Gender</label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="edit-male" name="gender" value="Male" <%
+              if(user.gender=="Male" ){ %>
+            checked
+            <% } %>>
+              <label class="form-check-label" for="edit-male">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="edit-female" name="gender" value="Female" <%
+              if(user.gender=="Female" ){ %>
+            checked
+            <% } %>>
+              <label class="form-check-label" for="edit-female">Female</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="mobile" class="form-label">
+            Mobile Number
+          </label>
+          <div class="input-group">
+            <% const userCode=user.mobileNumber.split(" ")[0]; %>
+          <select class=" form-select" id="country-code" name="country-code" aria-label="Country Code" required>
+              <% countryInfo.forEach(entry=> { entry.countryCode = parseInt(entry.countryCode.slice(1)); }) %>
+                <% const byCode=sortByKey(countryInfo, "countryCode" ); %>
+                  <% byCode.forEach(entry=> { %>
+                    <option value='+<%= entry.countryCode %>' <% if(userCode==='+' +entry.countryCode){ %> selected <% }
+                        %>>
+                        +<%= entry.countryCode %> (<%= entry.country %>)
+                    </option>
+                    <% }) %>
+                      </select>
+                      <input type="tel" id="mobile" name="mobile" class="form-control"
+                        value="<%= user.mobileNumber.split(" ")[1] %>" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="nationality" class="form-label">Nationality</label>
+          <select id="nationality" name="nationality" class="form-select" required>
+            <% const byNationality=sortByKey(countryInfo, "nationality" ); %>
+              <% byNationality.forEach(entry=> { %>
+                <option value="<%= entry.nationality %>" <% if(user.nationality===entry.nationality) { %> selected <% }
+                    %>>
+                    <%= entry.nationality %>
+                </option>
+                <% }) %>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="passport" class="form-label">Passport Number</label>
+          <input type="text" id="passport" name="passport" class="form-control" value="<%= user.passportNumber %>"
+            required>
+        </div>
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input type="date" id="dob" name="dob" class="form-control" value="<%= user.dob.split('T')[0] %>" required>
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a href="/profile" class="btn btn-secondary">Cancel</a>
+        </div>
+        <div class="mb-3">
+          <label id="alert" class="form-check-label" style="color: red"></label>
+        </div>
+      </form>
+    </div>
+
+    <%- include("./partials/footer") %>
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
+      <script src="/update.js"></script>
+
+</body>
+
+</html>

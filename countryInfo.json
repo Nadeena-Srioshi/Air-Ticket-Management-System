@@ -1,0 +1,112 @@
+[
+  {
+    "country": "Argentina",
+    "nationality": "Argentinian",
+    "countryCode": "+54"
+  },
+  {
+    "country": "Australia",
+    "nationality": "Australian",
+    "countryCode": "+61"
+  },
+  {
+    "country": "Brazil",
+    "nationality": "Brazilian",
+    "countryCode": "+55"
+  },
+  {
+    "country": "Canada",
+    "nationality": "Canadian",
+    "countryCode": "+1"
+  },
+  {
+    "country": "China",
+    "nationality": "Chinese",
+    "countryCode": "+86"
+  },
+  {
+    "country": "Egypt",
+    "nationality": "Egyptian",
+    "countryCode": "+20"
+  },
+  {
+    "country": "France",
+    "nationality": "French",
+    "countryCode": "+33"
+  },
+  {
+    "country": "Germany",
+    "nationality": "German",
+    "countryCode": "+49"
+  },
+  {
+    "country": "India",
+    "nationality": "Indian",
+    "countryCode": "+91"
+  },
+  {
+    "country": "Italy",
+    "nationality": "Italian",
+    "countryCode": "+39"
+  },
+  {
+    "country": "Japan",
+    "nationality": "Japanese",
+    "countryCode": "+81"
+  },
+  {
+    "country": "Mexico",
+    "nationality": "Mexican",
+    "countryCode": "+52"
+  },
+  {
+    "country": "Nigeria",
+    "nationality": "Nigerian",
+    "countryCode": "+234"
+  },
+  {
+    "country": "Russia",
+    "nationality": "Russian",
+    "countryCode": "+7"
+  },
+  {
+    "country": "South Africa",
+    "nationality": "South African",
+    "countryCode": "+27"
+  },
+  {
+    "country": "South Korea",
+    "nationality": "South Korean",
+    "countryCode": "+82"
+  },
+  {
+    "country": "Spain",
+    "nationality": "Spanish",
+    "countryCode": "+34"
+  },
+  {
+    "country": "Sri Lanka",
+    "nationality": "Sri Lankan",
+    "countryCode": "+94"
+  },
+  {
+    "country": "Taiwan",
+    "nationality": "Taiwanese",
+    "countryCode": "+886"
+  },
+  {
+    "country": "Turkey",
+    "nationality": "Turkish",
+    "countryCode": "+90"
+  },
+  {
+    "country": "United Kingdom",
+    "nationality": "British",
+    "countryCode": "+44"
+  },
+  {
+    "country": "United States",
+    "nationality": "American",
+    "countryCode": "+1"
+  }
+]

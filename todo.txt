@@ -1,0 +1,4 @@
+port to env
+shorten axios reqs
+better booking update
+migrate admins to another app
